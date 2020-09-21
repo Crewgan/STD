@@ -1,0 +1,10 @@
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\bin\Debug\Ex1.exe.config
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\bin\Debug\Ex1.exe
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\bin\Debug\Ex1.pdb
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.csprojAssemblyReference.cache
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.FrmMain.resources
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.Properties.Resources.resources
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.csproj.GenerateResource.cache
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.exe
+C:\Users\Administrateur\Desktop\STD\Ex1\Ex1\Ex1\obj\Debug\Ex1.pdb
