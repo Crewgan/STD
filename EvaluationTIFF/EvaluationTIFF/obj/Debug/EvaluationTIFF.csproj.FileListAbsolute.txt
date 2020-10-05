@@ -1,0 +1,10 @@
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\bin\Debug\EvaluationTIFF.exe.config
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\bin\Debug\EvaluationTIFF.exe
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\bin\Debug\EvaluationTIFF.pdb
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.csprojAssemblyReference.cache
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.FrmMain.resources
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.Properties.Resources.resources
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.csproj.GenerateResource.cache
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.exe
+C:\Users\Administrateur\Desktop\STD\EvaluationTIFF\EvaluationTIFF\obj\Debug\EvaluationTIFF.pdb

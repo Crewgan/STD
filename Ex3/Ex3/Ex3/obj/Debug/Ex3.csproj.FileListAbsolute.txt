@@ -1,0 +1,10 @@
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\bin\Debug\Ex3.exe.config
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\bin\Debug\Ex3.exe
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\bin\Debug\Ex3.pdb
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.csprojAssemblyReference.cache
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.FrmMain.resources
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.Properties.Resources.resources
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.csproj.GenerateResource.cache
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.exe
+C:\Users\Administrateur\Desktop\STD\Ex3\Ex3\Ex3\obj\Debug\Ex3.pdb

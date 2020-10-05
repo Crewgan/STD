@@ -81,7 +81,6 @@ namespace Ex2
                 }
             }
             fs.Seek(0, SeekOrigin.Begin);
-            int fileSize = 0;
 
             Console.WriteLine(datas[7]);
             Console.WriteLine(datas[8]);
