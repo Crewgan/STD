@@ -10,14 +10,15 @@ namespace ExIkea
 {
     class Client
     {
-        static Size size = new Size(10, 10);
-
+        static Size size = new Size(30, 30);
         Random rdm;
+        
         Size storeSize;
-        Point location;
+        public Point location;
         Point departure;
         Point arrival;
-        Stopwatch sp;
+        Stopwatch spMovement;
+        Stopwatch spCheckout;
 
         float timeToReachArrival;
         float speedX;
@@ -27,75 +28,122 @@ namespace ExIkea
         int nbArticles;
         int timeBeforeCheckout;
         bool isCheckingOut;
-        bool isShopping;
         bool isAngry;
         List<Checkout> checkouts;
         private Checkout _checkout;
 
+        enum clientState
+        {
+            Shopping,
+            SearchCheckout,
+            InQueue,
+            CheckingOut
+        }
+
+        clientState state;
+
+        Brush color;
+
         public bool IsAngry { get => isAngry; }
 
-        public Client(Size storeSize, List<Checkout> checkouts)
+        public Client(Size storeSize, List<Checkout> checkouts, Random rdm)
         {
-            rdm = new Random();
             this.storeSize = storeSize;
+            this.rdm = rdm;
             departure = new Point(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
             location = departure;
             arrival = new Point(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
-            sp = new Stopwatch();
-            sp.Start();
+            spMovement = new Stopwatch();
+            spMovement.Start();
+
+            spCheckout = new Stopwatch();
+            spCheckout.Start();
 
             timeToReachArrival = rdm.Next(5000, 8000);
             nbArticles = rdm.Next(5, 25);
             timeBeforeCheckout = nbArticles * 1000;
 
             isCheckingOut = false;
-            isShopping = true;
             isAngry = false;
             this.checkouts = checkouts;
+
+            state = clientState.Shopping;
 
             CalculateSpeed();
         }
 
+        public void Paint(Graphics g)
+        {
+            if (state == clientState.Shopping)
+                color = Brushes.Gray;
+            else if (!IsAngry)
+                color = Brushes.Green;
+            else
+                color = Brushes.Red;
+
+            g.FillEllipse(color, new RectangleF(location, size));
+        }
+
         public void Actions()
         {
-            Move();
-            if (sp.ElapsedMilliseconds >= timeBeforeCheckout)
+            switch (state)
             {
-                isShopping = false;
-            }
-            FindCheckout();
-        }
-        private void FindCheckout()
-        {
-            if (!isShopping)
-            {
-                if (_checkout == null)
-                {
-                    int minCheckoutNbClients = Int32.MaxValue;
-                    foreach (var checkout in checkouts)
+                case clientState.Shopping:
+                    Move();
+                    break;
+                case clientState.SearchCheckout:
+                    Checkout newCheckout = FindCheckout();
+                    if (newCheckout != null && _checkout != newCheckout)
                     {
-                        if (minCheckoutNbClients > checkout.GetNumberClients() && checkout.IsOpen())
-                        {
-                            minCheckoutNbClients = checkout.GetNumberClients();
-                            _checkout = checkout.IsFull() ? null : checkout;
-                        }
+                        _checkout = newCheckout;
+                        NewDestination(_checkout.GetQueueLocation());
                     }
-                    isAngry = _checkout == null ? true : false;
-                }
 
-                departure = location;
-                arrival = _checkout.Location;
-                if (location == _checkout.Location)
-                {
-                    isCheckingOut = true;
-                }
+                    Move();
 
-                if (isCheckingOut)
-                {
-                    _checkout.NewClient(this);
-                }
+                    if (_checkout != null && _checkout.IsInQueue(this))
+                    {
+                        state = clientState.InQueue;
+                        _checkout.NewClient(this);
+                    }
+
+                    break;
+                case clientState.InQueue:
+                    Console.WriteLine("Youhou");
+                    
+                    break;
+                case clientState.CheckingOut:
+                    break;
+                default:
+                    Console.WriteLine("Help");
+                    break;
+            }
+
+            if (spCheckout.ElapsedMilliseconds >= timeBeforeCheckout)
+            {
+                state = clientState.SearchCheckout;
+                spCheckout.Reset();
+                spCheckout.Stop();
             }
         }
+
+        private Checkout FindCheckout()
+        {
+            Checkout result = null;
+            int minCheckoutNbClients = Int32.MaxValue;
+            foreach (var checkout in checkouts)
+            {
+                if (checkout.IsOpen() && !checkout.IsFull() && minCheckoutNbClients > checkout.GetNumberClients())
+                {
+                    minCheckoutNbClients = checkout.GetNumberClients();
+                    result = checkout;
+                }
+            }
+            isAngry = result == null;
+
+            return result;
+        }
+
         private void CalculateSpeed()
         {
             int minX, maxX, minY, maxY, distanceX, distanceY;
@@ -115,16 +163,34 @@ namespace ExIkea
 
         private void Move()
         {
-            if (sp.IsRunning)
+            if (spMovement.IsRunning)
             {
-                location.X = Convert.ToInt32(speedX * (Convert.ToDouble(sp.ElapsedMilliseconds) / milliseconds) + departure.X);
-                location.Y = Convert.ToInt32(speedY * (Convert.ToDouble(sp.ElapsedMilliseconds) / milliseconds) + departure.Y);
+                location.X = Convert.ToInt32(speedX * (Convert.ToDouble(spMovement.ElapsedMilliseconds) / milliseconds) + departure.X);
+                location.Y = Convert.ToInt32(speedY * (Convert.ToDouble(spMovement.ElapsedMilliseconds) / milliseconds) + departure.Y);
             }
 
-            if (Convert.ToInt32(sp.ElapsedMilliseconds) >= Convert.ToInt32(timeToReachArrival))
+            if (Convert.ToInt32(spMovement.ElapsedMilliseconds) >= Convert.ToInt32(timeToReachArrival) && state == clientState.Shopping)
             {
-                sp.Stop();
+                NewDestination();
             }
+        }
+
+        private void NewDestination()
+        {
+            departure = new Point(location.X, location.Y);
+            arrival = new Point(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
+
+            CalculateSpeed();
+            spMovement.Restart();
+        }
+
+        private void NewDestination(Point newArrival)
+        {
+            departure = new Point(location.X, location.Y);
+            arrival = newArrival;
+
+            CalculateSpeed();
+            spMovement.Restart();
         }
     }
 }

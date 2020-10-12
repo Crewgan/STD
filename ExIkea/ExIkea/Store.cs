@@ -26,8 +26,10 @@ namespace ExIkea
         private List<Checkout> _checkouts;
         private List<Client> _clients;
 
+        Random rdm;
         public Store(Size size, int maxClients, int checkoutAvailableAtOpening, int timeBeforeOpeningCheckout, int timeBeforeClientArrival, int numberOfClientByArrival, int numberOfCheckouts)
         {
+
             this.size = size;
             this.maxClients = maxClients;
             this._checkoutAvailableAtOpening = checkoutAvailableAtOpening;
@@ -47,8 +49,25 @@ namespace ExIkea
             _checkouts = new List<Checkout>();
             _clients = new List<Client>();
 
+
+            rdm = new Random();
+
             CreateCheckouts(numberOfCheckouts);
-            CreateClients(10);
+            CreateClients(numberOfClientByArrival);
+        }
+
+        public void Paint(Graphics g)
+        {
+            foreach (var checkout in _checkouts)
+            {
+                checkout.Paint(g);
+            }
+
+            foreach (var client in _clients)
+            {
+                client.Actions();
+                client.Paint(g);
+            }
         }
         
         private void TimerOnTick(object sender, EventArgs e)
@@ -75,7 +94,7 @@ namespace ExIkea
                 {
                     if (!checkout.IsOpen())
                     {
-                        checkout.OpenCheckout();
+                        //checkout.OpenCheckout();
                     }
                 }
                 _spCheckout.Reset();
@@ -105,7 +124,7 @@ namespace ExIkea
         {
             while (numberOfNewClient != 0)
             {
-                _clients.Add(new Client(size, _checkouts));
+                _clients.Add(new Client(size, _checkouts, rdm));
                 numberOfNewClient--;
             }
         }
@@ -116,7 +135,7 @@ namespace ExIkea
             {
                 bool isOpen = i < _checkoutAvailableAtOpening ? true : false;
                 int numberMaxClient = 5;
-                _checkouts.Add(new Checkout(isOpen, numberMaxClient, new Point(i*Checkout.Size.Width + 5, size.Height - Checkout.Size.Height)));
+                _checkouts.Add(new Checkout(isOpen, numberMaxClient, new Point(i * (Checkout.Size.Width + 10), size.Height - Checkout.Size.Height)));
             }
         }
     }

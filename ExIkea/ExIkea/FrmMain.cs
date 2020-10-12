@@ -12,16 +12,23 @@ namespace ExIkea
 {
     public partial class FrmMain : Form
     {
-        Store ikea;
+        Store store;
+        Bitmap storeImage;
+        Graphics g;
         public FrmMain()
         {
             InitializeComponent();
-            ikea = new Store(new Size(500, 500), 50, 3, 30, 60, 10, 5);
+            store = new Store(new Size(500, 500), 50, 1, 30, 60, 5, 5);
+            storeImage = new Bitmap(pcbStore.Width, pcbStore.Height);
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
+        private void Display_Tick(object sender, EventArgs e)
         {
+            storeImage = new Bitmap(pcbStore.Width, pcbStore.Height);
+            g = Graphics.FromImage(storeImage);
+            store.Paint(g);
 
+            pcbStore.Image = storeImage;
         }
     }
 }

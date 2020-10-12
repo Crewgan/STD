@@ -28,21 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.tmrDisplay = new System.Windows.Forms.Timer(this.components);
+            this.pcbStore = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbStore)).BeginInit();
             this.SuspendLayout();
+            // 
+            // tmrDisplay
+            // 
+            this.tmrDisplay.Enabled = true;
+            this.tmrDisplay.Interval = 10;
+            this.tmrDisplay.Tick += new System.EventHandler(this.Display_Tick);
+            // 
+            // pcbStore
+            // 
+            this.pcbStore.Location = new System.Drawing.Point(12, 12);
+            this.pcbStore.Name = "pcbStore";
+            this.pcbStore.Size = new System.Drawing.Size(812, 536);
+            this.pcbStore.TabIndex = 0;
+            this.pcbStore.TabStop = false;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(836, 560);
+            this.Controls.Add(this.pcbStore);
             this.Name = "FrmMain";
             this.Text = "Ikea";
-            this.Load += new System.EventHandler(this.FrmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pcbStore)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrDisplay;
+        private System.Windows.Forms.PictureBox pcbStore;
     }
 }
 
