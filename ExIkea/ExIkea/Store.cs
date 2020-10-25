@@ -78,7 +78,6 @@ namespace ExIkea
                 _spClientArrival.Restart();
             }
 
-            CountAvailableCheckouts(); // Afficher
             if (CountAngryClients() > 0)
             {
                 _spCheckout.Start();
@@ -90,34 +89,11 @@ namespace ExIkea
 
             if (_spCheckout.ElapsedMilliseconds >= timeBeforeOpeningCheckout)
             {
-                foreach (var checkout in _checkouts)
-                {
-                    if (!checkout.IsOpen())
-                    {
-                        //checkout.OpenCheckout();
-                    }
-                }
+                _checkouts.Where(k => !k.IsOpen()).First().OpenCheckout();
                 _spCheckout.Reset();
             }
-        }
-        private int CountAvailableCheckouts()
-        {
-            int result = 0;
-            foreach (var checkout in _checkouts)
-            {
-                result += checkout.IsOpen() ? 1 : 0;
-            }
-            return result;
-        }
 
-        private int CountAngryClients()
-        {
-            int result = 0;
-            foreach (var client in _clients)
-            {
-                result += client.IsAngry ? 1 : 0;
-            }
-            return result;
+
         }
 
         private void CreateClients(int numberOfNewClient)
@@ -137,6 +113,26 @@ namespace ExIkea
                 int numberMaxClient = 5;
                 _checkouts.Add(new Checkout(isOpen, numberMaxClient, new Point(i * (Checkout.Size.Width + 10), size.Height - Checkout.Size.Height)));
             }
+        }
+
+        private int CountAvailableCheckouts()
+        {
+            int result = 0;
+            foreach (var checkout in _checkouts)
+            {
+                result += checkout.IsOpen() ? 1 : 0;
+            }
+            return result;
+        }
+
+        private int CountAngryClients()
+        {
+            int result = 0;
+            foreach (var client in _clients)
+            {
+                result += client.IsAngry ? 1 : 0;
+            }
+            return result;
         }
     }
 }

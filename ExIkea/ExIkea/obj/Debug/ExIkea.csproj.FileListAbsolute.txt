@@ -8,3 +8,13 @@ C:\Users\Administrateur\Desktop\STD\ExIkea\ExIkea\obj\Debug\ExIkea.csproj.Genera
 C:\Users\Administrateur\Desktop\STD\ExIkea\ExIkea\obj\Debug\ExIkea.csproj.CoreCompileInputs.cache
 C:\Users\Administrateur\Desktop\STD\ExIkea\ExIkea\obj\Debug\ExIkea.exe
 C:\Users\Administrateur\Desktop\STD\ExIkea\ExIkea\obj\Debug\ExIkea.pdb
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\bin\Debug\ExIkea.exe.config
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\bin\Debug\ExIkea.exe
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\bin\Debug\ExIkea.pdb
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.csprojAssemblyReference.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.FrmMain.resources
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.Properties.Resources.resources
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.csproj.GenerateResource.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.csproj.CoreCompileInputs.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.exe
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\ExIkea\ExIkea\obj\Debug\ExIkea.pdb

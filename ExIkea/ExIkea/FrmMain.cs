@@ -18,7 +18,7 @@ namespace ExIkea
         public FrmMain()
         {
             InitializeComponent();
-            store = new Store(new Size(500, 500), 50, 1, 30, 60, 5, 5);
+            store = new Store(new Size(500, 500), 50, 1, 30000, 60, 20, 5);
             storeImage = new Bitmap(pcbStore.Width, pcbStore.Height);
         }
 

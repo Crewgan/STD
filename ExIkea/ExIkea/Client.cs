@@ -14,9 +14,9 @@ namespace ExIkea
         Random rdm;
         
         Size storeSize;
-        public Point location;
-        Point departure;
-        Point arrival;
+        public PointF location;
+        PointF departure;
+        PointF arrival;
         Stopwatch spMovement;
         Stopwatch spCheckout;
 
@@ -27,17 +27,19 @@ namespace ExIkea
 
         int nbArticles;
         int timeBeforeCheckout;
-        bool isCheckingOut;
         bool isAngry;
         List<Checkout> checkouts;
         private Checkout _checkout;
+
+        int positionInLine;
 
         enum clientState
         {
             Shopping,
             SearchCheckout,
             InQueue,
-            CheckingOut
+            CheckingOut,
+            Done
         }
 
         clientState state;
@@ -50,20 +52,19 @@ namespace ExIkea
         {
             this.storeSize = storeSize;
             this.rdm = rdm;
-            departure = new Point(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
+            departure = new PointF(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
             location = departure;
-            arrival = new Point(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
+            arrival = new PointF(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
             spMovement = new Stopwatch();
             spMovement.Start();
 
             spCheckout = new Stopwatch();
             spCheckout.Start();
 
-            timeToReachArrival = rdm.Next(5000, 8000);
+            timeToReachArrival = rdm.Next(2500, 4000);
             nbArticles = rdm.Next(5, 25);
             timeBeforeCheckout = nbArticles * 1000;
 
-            isCheckingOut = false;
             isAngry = false;
             this.checkouts = checkouts;
 
@@ -76,7 +77,7 @@ namespace ExIkea
         {
             if (state == clientState.Shopping)
                 color = Brushes.Gray;
-            else if (!IsAngry)
+            else if (!isAngry)
                 color = Brushes.Green;
             else
                 color = Brushes.Red;
@@ -89,41 +90,64 @@ namespace ExIkea
             switch (state)
             {
                 case clientState.Shopping:
+                    if (spCheckout.ElapsedMilliseconds >= timeBeforeCheckout)
+                    {
+                        state = clientState.SearchCheckout;
+                        spCheckout.Reset();
+                        spCheckout.Stop();
+                    }
                     Move();
                     break;
                 case clientState.SearchCheckout:
                     Checkout newCheckout = FindCheckout();
+                    // Aller vers la caisse aillant le moins de clients
                     if (newCheckout != null && _checkout != newCheckout)
                     {
                         _checkout = newCheckout;
-                        NewDestination(_checkout.GetQueueLocation());
+                        NewDestination(_checkout.LastLocation);
                     }
 
-                    Move();
+                    // Trouver l'emplacement dans la queue
+                    if (_checkout != null && !arrival.Equals(_checkout.LastLocation) && !isAngry)
+                        NewDestination(_checkout.LastLocation);
 
-                    if (_checkout != null && _checkout.IsInQueue(this))
+                    Move();
+                    if (_checkout != null && Point.Round(location).Equals(Point.Round(arrival)) && _checkout.NewClient(this))
                     {
                         state = clientState.InQueue;
-                        _checkout.NewClient(this);
+                        positionInLine = _checkout.GetPositionInLine(this);
                     }
 
                     break;
                 case clientState.InQueue:
-                    Console.WriteLine("Youhou");
-                    
+                    Move();
+                    int newPositionInLine = _checkout.GetPositionInLine(this);
+
+                    if (positionInLine != newPositionInLine)
+                    {
+                        positionInLine = newPositionInLine;
+                        NewDestination(new PointF(_checkout.Location.X, _checkout.Location.Y - positionInLine * 50));
+                    }
+
+                    if (Point.Round(location).Equals(Point.Round(_checkout.Location)))
+                        Console.WriteLine(Point.Round(location) + " " + Point.Round(_checkout.Location));
+
+                    if (Point.Round(location).Equals(Point.Round(_checkout.Location)) && _checkout.CheckingOut(this))
+                        state = clientState.CheckingOut;
+
                     break;
                 case clientState.CheckingOut:
+                    if (!spCheckout.IsRunning)
+                        spCheckout.Start();
+
+                    if (spCheckout.ElapsedMilliseconds >= timeBeforeCheckout)
+                    {
+                        _checkout.ClientDone(this);
+                        state = clientState.Done;
+                    }
                     break;
                 default:
-                    Console.WriteLine("Help");
                     break;
-            }
-
-            if (spCheckout.ElapsedMilliseconds >= timeBeforeCheckout)
-            {
-                state = clientState.SearchCheckout;
-                spCheckout.Reset();
-                spCheckout.Stop();
             }
         }
 
@@ -144,9 +168,11 @@ namespace ExIkea
             return result;
         }
 
+        #region Movement
+        // Changer ce merdier
         private void CalculateSpeed()
         {
-            int minX, maxX, minY, maxY, distanceX, distanceY;
+            float minX, maxX, minY, maxY, distanceX, distanceY;
 
             minX = departure.X > arrival.X ? arrival.X : departure.X;
             maxX = departure.X < arrival.X ? arrival.X : departure.X;
@@ -157,40 +183,34 @@ namespace ExIkea
             distanceX = (maxX - minX) * (arrival.X < departure.X ? -1 : 1);
             distanceY = (maxY - minY) * (arrival.Y < departure.Y ? -1 : 1);
 
-            speedX = (distanceX) / Convert.ToInt32(timeToReachArrival / milliseconds);
-            speedY = (distanceY) / Convert.ToInt32(timeToReachArrival / milliseconds);
+            speedX = distanceX / (timeToReachArrival / milliseconds);
+            speedY = distanceY / (timeToReachArrival / milliseconds);
         }
 
         private void Move()
         {
             if (spMovement.IsRunning)
             {
-                location.X = Convert.ToInt32(speedX * (Convert.ToDouble(spMovement.ElapsedMilliseconds) / milliseconds) + departure.X);
-                location.Y = Convert.ToInt32(speedY * (Convert.ToDouble(spMovement.ElapsedMilliseconds) / milliseconds) + departure.Y);
+                location.X = speedX * ((float)spMovement.ElapsedMilliseconds / milliseconds) + departure.X;
+                location.Y = speedY * ((float)spMovement.ElapsedMilliseconds / milliseconds) + departure.Y;
             }
 
-            if (Convert.ToInt32(spMovement.ElapsedMilliseconds) >= Convert.ToInt32(timeToReachArrival) && state == clientState.Shopping)
+            if (spMovement.ElapsedMilliseconds >= timeToReachArrival)
             {
-                NewDestination();
+                spMovement.Reset();
+                if (state == clientState.Shopping || isAngry)
+                    NewDestination(new PointF(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height)));
             }
         }
 
-        private void NewDestination()
+        private void NewDestination(PointF newArrival)
         {
-            departure = new Point(location.X, location.Y);
-            arrival = new Point(rdm.Next(0, this.storeSize.Width), rdm.Next(0, this.storeSize.Height));
-
-            CalculateSpeed();
-            spMovement.Restart();
-        }
-
-        private void NewDestination(Point newArrival)
-        {
-            departure = new Point(location.X, location.Y);
+            departure = new PointF(location.X, location.Y);
             arrival = newArrival;
 
             CalculateSpeed();
             spMovement.Restart();
         }
+        #endregion
     }
 }
