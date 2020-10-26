@@ -100,7 +100,7 @@ namespace ExIkea
         {
             switch (state)
             {
-                case clientState.Shopping: // Move at a random speed to random location in the store. Until it finished shopping.
+                case clientState.Shopping: // Move at a random speed to random location in the store. Until it finished shopping.______________________________________________________________________________________
                     if (_spCheckout.ElapsedMilliseconds >= _timeBeforeCheckout)
                     {
                         state = clientState.SearchCheckout;
@@ -109,7 +109,7 @@ namespace ExIkea
                     }
                     Move();
                     break;
-                case clientState.SearchCheckout: // Search for a checkout and move towards it.
+                case clientState.SearchCheckout: // Search for a checkout and move towards it._________________________________________________________________________________________________________________________
                     Move();
 
                     Checkout newCheckout = FindCheckout();
@@ -125,14 +125,14 @@ namespace ExIkea
                         NewDestination(_checkout.LastLocation);
 
                     // Found and obtains a position in line.
-                    if (_checkout != null && Point.Round(location).Equals(Point.Round(_arrival)) && _checkout.NewClient(this))
+                    if (_checkout != null && Point.Round(location).Equals(Point.Round(_checkout.LastLocation)) && _checkout.NewClient(this))
                     {
                         state = clientState.InQueue;
                         _positionInLine = _checkout.GetPositionInLine(this);
                     }
 
                     break;
-                case clientState.InQueue: // Move in line until it reaches the checkout.
+                case clientState.InQueue: // Move in line until it reaches the checkout._______________________________________________________________________________________________________________________________
                     Move();
                     int newPositionInLine = _checkout.GetPositionInLine(this);
 
@@ -146,7 +146,7 @@ namespace ExIkea
                         state = clientState.CheckingOut;
 
                     break;
-                case clientState.CheckingOut: // Buy his articles. Takes more time if he has more articles.
+                case clientState.CheckingOut: // Buy his articles. Takes more time if he has more articles.____________________________________________________________________________________________________________
                     if (!_spCheckout.IsRunning)
                         _spCheckout.Start();
 

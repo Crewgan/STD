@@ -16,6 +16,7 @@ namespace ExIkea
         private PointF _location;
         private bool _isOpen;
         private int _maxNumberClients;
+        private int _nbClients;
         Brush color;
         PointF _lastLocation; // Beginning of the line for new clients.
 
@@ -30,6 +31,7 @@ namespace ExIkea
             this._maxNumberClients = maxNumberClients;
             this._location = location;
             _lastLocation = location;
+            _nbClients = 0;
 
             clients = new List<Client>();
         }
@@ -56,8 +58,9 @@ namespace ExIkea
         /// <returns>True if the client can be in line(Someone took the place), false if not</returns>
         public bool NewClient(Client client)
         {
-            if (clients.Count < MaxNumberClients)
+            if (_nbClients < MaxNumberClients)
             {
+                _nbClients++;
                 clients.Add(client);
                 _lastLocation = new PointF(Location.X, _lastLocation.Y - 50);
                 return true;
@@ -79,6 +82,7 @@ namespace ExIkea
         /// <param name="client">Client to remove</param>
         public void ClientDone(Client client)
         {
+            _nbClients--;
             clients.Remove(client);
             _lastLocation = new PointF(Location.X, _lastLocation.Y + 50);
         }
@@ -100,7 +104,7 @@ namespace ExIkea
 
         public int GetNumberClients()
         {
-            return clients.Count;
+            return _nbClients;
         }
 
         public bool IsOpen()
@@ -110,7 +114,7 @@ namespace ExIkea
 
         public bool IsFull()
         {
-            return !(clients.Count < MaxNumberClients);
+            return !(_nbClients < MaxNumberClients);
         }
     }
 }
