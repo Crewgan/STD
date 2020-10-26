@@ -131,6 +131,10 @@ namespace ExIkea
                         _positionInLine = _checkout.GetPositionInLine(this);
                     }
 
+                    // Easiest way to deal with a bug where the angry client happend to stop in the line and never move again.
+                    if (IsAngry && !_spMovement.IsRunning)
+                        NewDestination(new PointF(_rdm.Next(0, this._storeSize.Width), _rdm.Next(0, this._storeSize.Height)));
+
                     break;
                 case clientState.InQueue: // Move in line until it reaches the checkout._______________________________________________________________________________________________________________________________
                     Move();
