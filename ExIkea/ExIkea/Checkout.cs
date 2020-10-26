@@ -1,10 +1,11 @@
-﻿using System;
+﻿/**********************************************************************************************************************************************************************************************************************
+ * Name        : Joey Martig
+ * Project     : exIkea
+ * Date        : 26.10.2020
+ * Description : Simulate a store with clients and checkouts.
+ **********************************************************************************************************************************************************************************************************************/
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExIkea
 {
@@ -12,28 +13,32 @@ namespace ExIkea
     {
         static Size size = new Size(50, 50);
         List<Client> clients;
-        Dictionary<Point, Client> queue;
-        private Point _location;
+        private PointF _location;
         bool isOpen;
-        int maxNumberClients;
+        private int _maxNumberClients;
         Brush color;
+        PointF _lastLocation; // Beginning of the line for new clients.
 
-        public Point Location { get => new Point(_location.X, _location.Y); }
-        public static Size Size { get => size;}
+        public PointF Location { get => new PointF(_location.X, _location.Y); }
+        public static Size Size { get => size; }
+        public PointF LastLocation { get => _lastLocation; }
+        public int MaxNumberClients { get => _maxNumberClients; }
 
         public Checkout(bool isOpen, int maxNumberClients, Point location)
         {
             this.isOpen = isOpen;
-            this.maxNumberClients = maxNumberClients;
+            this._maxNumberClients = maxNumberClients;
             this._location = location;
+            _lastLocation = location;
 
             clients = new List<Client>();
-            queue = new Dictionary<Point, Client>();
-            for (int i = 0; i < this.maxNumberClients; i++)
-            {
-                queue.Add(new Point(this.Location.X + size.Width/2, this.Location.Y - (size.Height + 10) * i), null);
-            }
         }
+
+        /// <summary>
+        /// Display the checkout.
+        /// Blue if opened and red if closed.
+        /// </summary>
+        /// <param name="g"></param>
         public void Paint(Graphics g)
         {
             if (isOpen)
@@ -42,46 +47,45 @@ namespace ExIkea
                 color = Brushes.Red;
 
             g.FillRectangle(color, new RectangleF(_location, size));
+        }
 
-            // Temporaire
-            foreach (var item in queue)
+        /// <summary>
+        /// Add new clients to this checkout and move the position in the line.
+        /// </summary>
+        /// <param name="client">Client to add to this checkout</param>
+        /// <returns>True if the client can be in line(Someone took the place), false if not</returns>
+        public bool NewClient(Client client)
+        {
+            if (clients.Count < MaxNumberClients)
             {
-                g.FillRectangle(Brushes.Orange, new RectangleF(item.Key, new Size(15, 15)));
+                clients.Add(client);
+                _lastLocation = new PointF(Location.X, _lastLocation.Y - 50);
+                return true;
             }
+            return false;
         }
 
-        public Point GetQueueLocation()
+        /// <summary>
+        /// Tell the client if he is checking out or still in line.
+        /// </summary>
+        public bool CheckingOut(Client client)
         {
-            return queue.Select(k => k).Where(k => k.Value == null).FirstOrDefault().Key;
+            return client.Equals(clients[0]);
         }
 
-        public void NewClient(Client client)
-        {
-            clients.Add(client);
-        }
-
-        public bool IsInQueue(Client client)
-        {
-            Point position;
-            bool result;
-            int errorMargin = 10;
-            position = queue.Select(k => k).Where(k => k.Key.X <= client.location.X + errorMargin && 
-                                                       k.Key.X >= client.location.X - errorMargin &&
-                                                       k.Key.Y <= client.location.Y + errorMargin &&
-                                                       k.Key.Y <= client.location.Y - errorMargin).FirstOrDefault().Key;
-
-            result = !position.Equals(new Point(0, 0));
-
-            if (result)
-                queue[position] = client;
-
-            Console.WriteLine(result + " position: " + position + " clientPosition: " + client.location);
-            return result;
-        }
-
+        /// <summary>
+        /// Removes client from this checkout and changes the position in the line.
+        /// </summary>
+        /// <param name="client">Client to remove</param>
         public void ClientDone(Client client)
         {
             clients.Remove(client);
+            _lastLocation = new PointF(Location.X, _lastLocation.Y + 50);
+        }
+
+        public int GetPositionInLine(Client client)
+        {
+            return clients.IndexOf(client);
         }
 
         public void OpenCheckout()
@@ -106,7 +110,7 @@ namespace ExIkea
 
         public bool IsFull()
         {
-            return !(clients.Count < maxNumberClients);
+            return !(clients.Count < MaxNumberClients);
         }
     }
 }
