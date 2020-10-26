@@ -174,7 +174,7 @@ namespace ExIkea
         private Checkout FindCheckout()
         {
             Checkout result = null;
-            result = _checkouts.OrderBy(k => k.GetNumberClients()).Where(k => !k.IsFull() && k.IsOpen()).SingleOrDefault();
+            result = _checkouts.OrderBy(k => k.GetNumberClients()).Where(k => !k.IsFull() && k.IsOpen()).FirstOrDefault();
             _isAngry = result == null;
             return result;
         }
