@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace ExIkea
 {
@@ -202,24 +203,26 @@ namespace ExIkea
         }
 
         #region Movement
-        // Changer ce merdier
+
+        /// <summary>
+        /// Calculate the speed and the time the client has to reach his target.
+        /// </summary>
         private void CalculateSpeed()
         {
-            float minX, maxX, minY, maxY, distanceX, distanceY;
+            float speed = 100;
+            float xDiff = _arrival.X - _departure.X;
+            float yDiff = _arrival.Y - _departure.Y;
+            double angle = Math.Atan2(yDiff, xDiff);
 
-            minX = _departure.X > _arrival.X ? _arrival.X : _departure.X;
-            maxX = _departure.X < _arrival.X ? _arrival.X : _departure.X;
+            _speedX = (float)Math.Cos(angle) * speed;
+            _speedY = (float)Math.Sin(angle) * speed;
 
-            minY = _departure.Y > _arrival.Y ? _arrival.Y : _departure.Y;
-            maxY = _departure.Y < _arrival.Y ? _arrival.Y : _departure.Y;
-
-            distanceX = (maxX - minX) * (_arrival.X < _departure.X ? -1 : 1);
-            distanceY = (maxY - minY) * (_arrival.Y < _departure.Y ? -1 : 1);
-
-            _speedX = distanceX / (_timeToReachArrival / _milliseconds);
-            _speedY = distanceY / (_timeToReachArrival / _milliseconds);
+            _timeToReachArrival = xDiff / _speedX * _milliseconds;
         }
 
+        /// <summary>
+        /// Move the client in direction of his target. If the client is shopping, select a random target.
+        /// </summary>
         private void Move()
         {
             if (_spMovement.IsRunning)
@@ -236,6 +239,9 @@ namespace ExIkea
             }
         }
 
+        /// <summary>
+        /// Set the new destination.
+        /// </summary>
         private void NewDestination(PointF newArrival)
         {
             _departure = new PointF(location.X, location.Y);
