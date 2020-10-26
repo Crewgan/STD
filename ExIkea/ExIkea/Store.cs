@@ -80,7 +80,7 @@ namespace ExIkea
 
             RemoveClientsWhenDone();
 
-            if (_checkouts.Sum(k => k.MaxNumberClients) * CountAvailableCheckouts() > _clients.Count)
+            if (_checkouts.Where(k => k.IsOpen()).Sum(k => k.MaxNumberClients) * CountAvailableCheckouts() > _clients.Count)
             {
                 CloseCheckout();
             }

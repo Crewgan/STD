@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace ExIkea
@@ -109,19 +110,19 @@ namespace ExIkea
                     Move();
                     break;
                 case clientState.SearchCheckout: // Search for a checkout and move towards it.
+                    Move();
+
                     Checkout newCheckout = FindCheckout();
-                    // Find the checkout find the lesser clients.
-                    if (newCheckout != null && _checkout != newCheckout)
+                    // Find the checkout with the lesser clients.
+                    if (!_isAngry && _checkout != newCheckout)
                     {
                         _checkout = newCheckout;
                         NewDestination(_checkout.LastLocation);
                     }
 
                     // Find the position in the line.
-                    if (_checkout != null && !_arrival.Equals(_checkout.LastLocation) && !_isAngry)
+                    if (_checkout != null && !Point.Round(_arrival).Equals(Point.Round(_checkout.LastLocation)) && !_isAngry)
                         NewDestination(_checkout.LastLocation);
-
-                    Move();
 
                     // Found and obtains a position in line.
                     if (_checkout != null && Point.Round(location).Equals(Point.Round(_arrival)) && _checkout.NewClient(this))
@@ -169,17 +170,8 @@ namespace ExIkea
         private Checkout FindCheckout()
         {
             Checkout result = null;
-            int minCheckoutNbClients = Int32.MaxValue;
-            foreach (var checkout in _checkouts)
-            {
-                if (checkout.IsOpen() && !checkout.IsFull() && minCheckoutNbClients > checkout.GetNumberClients())
-                {
-                    minCheckoutNbClients = checkout.GetNumberClients();
-                    result = checkout;
-                }
-            }
+            result = _checkouts.OrderBy(k => k.GetNumberClients()).Where(k => !k.IsFull() && k.IsOpen()).SingleOrDefault();
             _isAngry = result == null;
-
             return result;
         }
 
@@ -234,7 +226,7 @@ namespace ExIkea
             if (_spMovement.ElapsedMilliseconds >= _timeToReachArrival)
             {
                 _spMovement.Reset();
-                if (state == clientState.Shopping || _isAngry)
+                if (state == clientState.Shopping || (state == clientState.SearchCheckout && _isAngry))
                     NewDestination(new PointF(_rdm.Next(0, this._storeSize.Width), _rdm.Next(0, this._storeSize.Height)));
             }
         }

@@ -14,7 +14,7 @@ namespace ExIkea
         static Size size = new Size(50, 50);
         List<Client> clients;
         private PointF _location;
-        bool isOpen;
+        private bool _isOpen;
         private int _maxNumberClients;
         Brush color;
         PointF _lastLocation; // Beginning of the line for new clients.
@@ -26,7 +26,7 @@ namespace ExIkea
 
         public Checkout(bool isOpen, int maxNumberClients, Point location)
         {
-            this.isOpen = isOpen;
+            this._isOpen = isOpen;
             this._maxNumberClients = maxNumberClients;
             this._location = location;
             _lastLocation = location;
@@ -41,7 +41,7 @@ namespace ExIkea
         /// <param name="g"></param>
         public void Paint(Graphics g)
         {
-            if (isOpen)
+            if (_isOpen)
                 color = Brushes.Blue;
             else
                 color = Brushes.Red;
@@ -90,12 +90,12 @@ namespace ExIkea
 
         public void OpenCheckout()
         {
-            isOpen = true;
+            _isOpen = true;
         }
 
         public void CloseCheckout()
         {
-            isOpen = false;
+            _isOpen = false;
         }
 
         public int GetNumberClients()
@@ -105,7 +105,7 @@ namespace ExIkea
 
         public bool IsOpen()
         {
-            return isOpen;
+            return _isOpen;
         }
 
         public bool IsFull()
