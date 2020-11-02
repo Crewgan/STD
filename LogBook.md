@@ -22,3 +22,4 @@
 -Suppression du timer du store
 -Fermeture de caisses dynamique
 -Refactoring
+-Réglage de bugs
