@@ -1,0 +1,12 @@
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\bin\Debug\netcoreapp3.1\DictionnaryGenerator.exe
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\bin\Debug\netcoreapp3.1\DictionnaryGenerator.deps.json
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\bin\Debug\netcoreapp3.1\DictionnaryGenerator.runtimeconfig.json
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\bin\Debug\netcoreapp3.1\DictionnaryGenerator.runtimeconfig.dev.json
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\bin\Debug\netcoreapp3.1\DictionnaryGenerator.dll
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\bin\Debug\netcoreapp3.1\DictionnaryGenerator.pdb
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\obj\Debug\netcoreapp3.1\DictionnaryGenerator.AssemblyInfoInputs.cache
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\obj\Debug\netcoreapp3.1\DictionnaryGenerator.AssemblyInfo.cs
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\obj\Debug\netcoreapp3.1\DictionnaryGenerator.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\obj\Debug\netcoreapp3.1\DictionnaryGenerator.dll
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\obj\Debug\netcoreapp3.1\DictionnaryGenerator.pdb
+C:\Users\Administrateur\Desktop\STD\DictionnaryGenerator\DictionnaryGenerator\obj\Debug\netcoreapp3.1\DictionnaryGenerator.genruntimeconfig.cache
