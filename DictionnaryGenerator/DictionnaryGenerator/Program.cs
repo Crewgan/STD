@@ -6,7 +6,7 @@ namespace DictionnaryGenerator
     class Program
     {
 
-        static int nbDictionaries = 3;
+        static int nbDictionaries = 2;
         static char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
         static void Main(string[] args)
@@ -19,23 +19,20 @@ namespace DictionnaryGenerator
             //static Dictionary<char, Dictionary> " + 
             string result = "";
             string thisDictName;
+            tab += "\t";
             for (int j = 0; j < alphabet.Length; j++)
             {
                 thisDictName = tab + dictName + alphabet[j];
+                
                 result += Environment.NewLine + thisDictName + " = {";
-                nb--;
-                for (int i = 0; i < nb; i++)
+                result += nb;
+                
+                if (nb-- > 0)
                 {
-                    if (nb > 0)
-                    {
-                        tab += "\t";
-                        result += tab + CreateDictionaires(nb, thisDictName, tab) + " };";
-                    }
-                    else
-                    {
-                        result += "finish";
-                    }
+                    result += tab + CreateDictionaires(nb, thisDictName, tab) + " };";
+                    nb++;
                 }
+                    
             }
             return result;
         }
