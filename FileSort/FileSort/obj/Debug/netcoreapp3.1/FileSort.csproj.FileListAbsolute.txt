@@ -11,3 +11,16 @@ C:\Users\Administrateur\Desktop\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\Fi
 C:\Users\Administrateur\Desktop\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.dll
 C:\Users\Administrateur\Desktop\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.pdb
 C:\Users\Administrateur\Desktop\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.genruntimeconfig.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\bin\Debug\netcoreapp3.1\FileSort.exe
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\bin\Debug\netcoreapp3.1\FileSort.deps.json
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\bin\Debug\netcoreapp3.1\FileSort.runtimeconfig.json
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\bin\Debug\netcoreapp3.1\FileSort.runtimeconfig.dev.json
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\bin\Debug\netcoreapp3.1\FileSort.dll
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\bin\Debug\netcoreapp3.1\FileSort.pdb
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.csprojAssemblyReference.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.AssemblyInfoInputs.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.AssemblyInfo.cs
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.csproj.CoreCompileInputs.cache
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.dll
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.pdb
+C:\Users\schad\Desktop\Ecole\STD\Git\STD\FileSort\FileSort\obj\Debug\netcoreapp3.1\FileSort.genruntimeconfig.cache

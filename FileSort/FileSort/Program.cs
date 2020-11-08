@@ -10,7 +10,7 @@ namespace FileSort
     class Program
     {
         static string newFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\SortedFile.txt";
-        static string FilePath = AppDomain.CurrentDomain.BaseDirectory + @"\TempFile.txt";
+        static string FilePath = AppDomain.CurrentDomain.BaseDirectory + @"\TempFile2.txt";
         static Char[] charsToReplace = { ' ' };
         static Char[] CharsToDelete = { '.', ',', '?', '!', '[', ']', '{', '}', '(', ')', '"', '\'', ' ' };
         static Stopwatch sp = new Stopwatch();
@@ -44,7 +44,6 @@ namespace FileSort
                     Console.WriteLine(string.Format("Time to sort {0} ms", sp.ElapsedMilliseconds));
                 }
             }
-            
         }
     }
 }
